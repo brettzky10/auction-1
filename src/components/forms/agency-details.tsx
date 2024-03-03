@@ -99,6 +99,7 @@ const AgencyDetails = ({ data }: Props) => {
     try {
       let newUserData
       let custId
+      //Stripe data:
       if (!data?.id) {
         const bodyData = {
           email: values.companyEmail,
@@ -122,7 +123,7 @@ const AgencyDetails = ({ data }: Props) => {
           },
         }
 
-        const customerResponse = await fetch('/api/stripe/create-customer', {
+        /* const customerResponse = await fetch('/api/stripe/create-customer', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -131,15 +132,13 @@ const AgencyDetails = ({ data }: Props) => {
         })
         const customerData: { customerId: string } =
           await customerResponse.json()
-        custId = customerData.customerId
+        custId = customerData.customerId */
       }
 
       newUserData = await initUser({ role: 'AGENCY_OWNER' })
-      if (!data?.customerId && !custId) return
-
-      const response = await upsertAgency({
+      if (!data?.id) await upsertAgency({
         id: data?.id ? data.id : v4(),
-        customerId: data?.customerId || custId || '',
+        //customerId: data?.customerId || custId || '',
         address: values.address,
         agencyLogo: values.agencyLogo,
         city: values.city,
@@ -156,18 +155,20 @@ const AgencyDetails = ({ data }: Props) => {
         goal: 5,
       })
       toast({
-        title: 'Created Agency',
+        title: 'Created Agency!',
       })
-      if (data?.id) return router.refresh()
-      if (response) {
-        return router.refresh()
-      }
+
+      //refreshes page but middle ware will redirect if there is data
+      return router.refresh()
+      
+
+
     } catch (error) {
       console.log(error)
       toast({
         variant: 'destructive',
-        title: 'Oppse!',
-        description: 'could not create your agency',
+        title: 'Sorry!',
+        description: 'Could not create your agency',
       })
     }
   }
@@ -186,8 +187,8 @@ const AgencyDetails = ({ data }: Props) => {
       console.log(error)
       toast({
         variant: 'destructive',
-        title: 'Oppse!',
-        description: 'could not delete your agency ',
+        title: 'Sorry!',
+        description: 'Could not delete your agency ',
       })
     }
     setDeletingAgency(false)
