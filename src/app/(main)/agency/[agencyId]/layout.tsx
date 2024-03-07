@@ -1,7 +1,7 @@
 import BlurPage from '@/components/global/blur-page'
 import InfoBar from '@/components/global/infobar'
 import Sidebar from '@/components/sidebar/sidebar'
-import Unauthorized from '../unauthorized/_components/unauthorized'
+import Unauthorized from '../../../../components/unauthorized'
 import {
   getNotificationAndUser,
   verifyAndAcceptInvitation,
