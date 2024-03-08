@@ -129,7 +129,7 @@ const page = async ({ params }: Props) => {
             features={[]}
             title={'24/7 priority support'}
             highlightTitle="Get support now!"
-            highlightDescription="Get priority support and skip the long long with the click of a button."
+            highlightDescription="Get priority support and skip the long line with the click of a button."
           />
         ))}
       </div>
